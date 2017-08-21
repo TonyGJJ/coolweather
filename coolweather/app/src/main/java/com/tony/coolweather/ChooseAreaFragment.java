@@ -1,5 +1,6 @@
 package com.tony.coolweather;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Build;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.tony.coolweather.db.City;
 import com.tony.coolweather.db.County;
 import com.tony.coolweather.db.Province;
+import com.tony.coolweather.gson.Weather;
 import com.tony.coolweather.util.HttpUtil;
 import com.tony.coolweather.util.Utility;
 
@@ -84,6 +86,12 @@ public class ChooseAreaFragment extends Fragment {
                 } else if (currentLevel == LEVEL_CITY) {
                     selectedCity = cityList.get(position);
                     qureyCounties();
+                } else if (currentLevel == LEVEL_COUNT) {
+                    String weatherId = countyList.get(position).getWeatherId();
+                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                    intent.putExtra("weather_id", weatherId);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });

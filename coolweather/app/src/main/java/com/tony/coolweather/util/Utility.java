@@ -2,9 +2,11 @@ package com.tony.coolweather.util;
 
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.tony.coolweather.db.City;
 import com.tony.coolweather.db.County;
 import com.tony.coolweather.db.Province;
+import com.tony.coolweather.gson.Weather;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,7 +21,6 @@ public class Utility {
      * 解析和处理服务器返回的省级数据
      *
      * @param response the response
-     * @param id
      * @return the boolean
      */
     public static boolean handleProvinceResponse(String response) {
@@ -91,5 +92,17 @@ public class Utility {
             }
         }
         return false;
+    }
+
+    public static Weather handleWeatherResponse(String response) {
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
+            String weatherContent = jsonArray.getJSONObject(0).toString();
+            return new Gson().fromJson(weatherContent, Weather.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
