@@ -44,9 +44,8 @@ public class WeatherActivity extends AppCompatActivity {
     private TextView sportText;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle
-            persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
         // 初始化各种控件
         weatherLayout = (ScrollView) findViewById(R.id.weather_layout);
@@ -59,6 +58,7 @@ public class WeatherActivity extends AppCompatActivity {
         pm25Text = (TextView) findViewById(R.id.pm25_text);
         comfortText = (TextView) findViewById(R.id.comfort_text);
         sportText = (TextView) findViewById(R.id.sport_text);
+        carWashText = (TextView) findViewById(R.id.car_wash_text);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         String weatherString = prefs.getString("weather", null);
@@ -72,7 +72,6 @@ public class WeatherActivity extends AppCompatActivity {
             weatherLayout.setVisibility(View.INVISIBLE);
             requestWeather(weatherId);
         }
-
     }
 
     private void showWeatherInfo(Weather weather) {
